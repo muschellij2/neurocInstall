@@ -1,5 +1,5 @@
-# neurocInstall package version: 0.12.0
-pkg_ver = '# neurocInstall package version: 0.12.0'
+# neurocInstall package version: 0.12.1
+pkg_ver = '# neurocInstall package version: 0.12.1'
 # source("https://bioconductor.org/biocLite.R")
 # biocLite(suppressUpdates = TRUE,
 #          suppressAutoUpdate = TRUE,
@@ -82,7 +82,8 @@ message(paste("Using neurocLite version:", pkg_ver))
 	#'    system.time({
 	#'    install.packages("oro.asl",
 	#'    lib = tlib,
-	#'    repos = "https://neuroconductor.org/releases/2019/12/")
+	#'    repos = "https://neuroconductor.org/releases/2019/12/",
+	#'    verbose = TRUE)
 	#'    })
 	#'    repos = getOption("repos")
 	#'    print(repos)
@@ -96,10 +97,11 @@ message(paste("Using neurocLite version:", pkg_ver))
 	#'    release_repo = "https://neuroconductor.org/releases/2019/12")
 	#'    options(repos = repos)
 	#'  }
-	#' \dontrun{
-	#'    neuro_install("cifti", type = "source", lib = tlib)
+	#' \donttest{
+	#'    options(repos = "http://cran.r-project.org")
+	#'    neuro_install("cifti", type = "source", lib = tlib, verbose = TRUE)
 	#'    neuro_install("cifti",
-	#'    release_repo = latest_neuroc_release("stable"),
+	#'    release_repo = latest_neuroc_release(),
 	#'    lib = tlib)
 	#'
 	#'    neuro_install("cifti", release_repo = "github")
@@ -280,6 +282,9 @@ message(paste("Using neurocLite version:", pkg_ver))
 	#' latest_neuroc_release()
 	#' }
 	latest_neuroc_release = function(secure = TRUE) {
+	  if (is.null(secure)) {
+	    secure = TRUE
+	  }
 	  make_release_version(
 	    release_path = NULL,
 	    secure = secure)
